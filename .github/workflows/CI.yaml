@@ -15,10 +15,10 @@ jobs:
 
     steps:
       - name: Скачиваем код репозитория
-        uses: actions/checkout@4
+        uses: actions/checkout@v4
 
       - name: Устанавливаем питон
-        uses: actions/setup-python@5
+        uses: actions/setup-python@v5
         with:
           python-version: "3.12"
           cache: 'pip'
