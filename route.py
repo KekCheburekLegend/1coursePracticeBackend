@@ -23,8 +23,10 @@ def generate_short_code(length: int = 6) -> str:
 @router.post("/post/url", response_model=URLResponse)
 async def create_short_url(url: URLCreate, db: Session = Depends(get_db)):
     short_code = generate_short_code()
-    exist = db.query(URLS).filter(URLS.id == short_code).first()
-    while exist:
+    existing_url = db.query(URLS).filter(URLS.url == str(url.url)).first()
+    if existing_url:
+        return existing_url
+    while db.query(URLS).filter(URLS.id == short_code).first():
         short_code = generate_short_code()
     new_url = URLS(id=short_code, url=str(url.url))
     try:
