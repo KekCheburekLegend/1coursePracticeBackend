@@ -1,7 +1,8 @@
 import os
 import sqlite3
 import encode
-
+import func
+import app.classes
 
 
 def Connnect_DB():
@@ -15,7 +16,7 @@ def Connnect_DB():
 def Path_new_url(Url:encode.URLRequest) -> str:
     connect = Connnect_DB()
     cursor = connect.cursor()
-    cursor.execute('Select ShortUrl from Url Where LongUrl = ?', (str(Url.url), ))
+    cursor.execute('Select ShortUrl from Urls Where LongUrl = ?', (str(Url.url), ))
     res_find = cursor.fetchone()
     if res_find is not None:
         return res_find[0]
@@ -47,7 +48,29 @@ def Try_find_short(short:str):
         return link[0]
     return None
 
+def Get_stats(id:int):
+    connect = Connnect_DB()
+    cursor = connect.cursor()
+    
+    cursor.execute('''
+                SELECT 
+                    m.transPoint,
+                    m.click AS clicks_from_this_point
+                FROM URLS u
+                LEFT JOIN 
+                    METADATA m ON u.id = m.urlid;
+                    ''')
+    results = cursor.fetchall()
+    data_dict = [dict(row) for row in results]
+    connect.close()
+    return data_dict
 
+def Get_ID(short:str) -> int | None :
+    connect = Connnect_DB()
+    cursor = connect.cursor()
+    cursor.execute('select ID from Urls where short_url = ?', (short))
+    id = cursor.fetchone()
+    return int(id[0]) if id else None
 
 
     

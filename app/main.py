@@ -1,11 +1,8 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import RedirectResponse
-import uvicorn
-import os
-import sys
-from pathlib import Path
 from bd_SQLite.encode import *
 from bd_SQLite.Work_with_BD import *
+from bd_SQLite.func import * 
 
 app = FastAPI()
 
@@ -34,3 +31,16 @@ def redirect_to_url(short_Link: str):
         url=link,
         status_code=302
     )
+
+
+@app.get("/{short_Link}/status")
+def get_status_for_user(short_Link):
+    id_url = Get_ID(short_Link)
+    if id_url is None:
+        raise HTTPException(
+            status_code=404,
+            detail="Short URL not found"
+        )
+    stats = Get_stats(id_url)
+    
+    return stats
