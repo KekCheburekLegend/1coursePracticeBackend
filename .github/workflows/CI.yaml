@@ -29,6 +29,6 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requrements.txt
       - name: установка пайтеста
-        run: pip install pytest
+        run: pip install pytest httpx
       - name: проверка тестов
         run: pytest
