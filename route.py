@@ -1,7 +1,7 @@
 from fastapi import APIRouter, responses, Depends, HTTPException
 from sqlalchemy.orm import Session
 from sqlalchemy import exc
-from model import Base, Users, URLS
+from model import Users, URLS
 from database import session_local, get_db
 from schema import UserCreate, UserResponse, URLCreate, URLResponse
 import secrets

@@ -27,3 +27,6 @@ build/
 .coverage
 htmlcov/
 .tox/
+
+*.db
+

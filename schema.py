@@ -4,7 +4,6 @@ from pydantic import BaseModel, HttpUrl
 class UserBase(BaseModel):
     username: str
     email: str
-    password: str
 
 
 class UserCreate(UserBase):
@@ -28,3 +27,8 @@ class URLResponse(BaseModel):
 
     class Config:
         from_attributes = True
+
+
+class token(BaseModel):
+    access_token: str
+    refresh_token: str
