@@ -1,5 +1,4 @@
-from pydantic import BaseModel, HttpUrl, Field
-from typing import Optional
+from pydantic import BaseModel, HttpUrl
 
 
 class URLRequest(BaseModel):
