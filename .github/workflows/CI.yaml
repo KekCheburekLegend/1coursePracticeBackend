@@ -28,5 +28,7 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requrements.txt
+      - name: установка пайтеста
+        run: pip install pytest
       - name: проверка тестов
         run: pytest
