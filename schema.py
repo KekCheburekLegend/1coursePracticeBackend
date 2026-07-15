@@ -29,6 +29,20 @@ class URLResponse(BaseModel):
         from_attributes = True
 
 
-class token(BaseModel):
+class StatsResponse(BaseModel):
+    id_url: str
+    full_url: str
+    click: int
+
+    class Config:
+        from_attributes = True
+
+
+class Token(BaseModel):
     access_token: str
     refresh_token: str
+    token_type: str = "bearer"
+
+
+class TokenData(BaseModel):
+    user_id: int

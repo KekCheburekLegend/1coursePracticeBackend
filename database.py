@@ -1,13 +1,15 @@
-from sqlalchemy.orm import sessionmaker
-from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession, async_sessionmaker
 import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 DB_URL = os.getenv("DB_URL")
 
-engine = create_engine(DB_URL,
-                       pool_size=150,
-                       max_overflow=350,
+engine = create_async_engine(DB_URL,
+                       pool_size=20,
+                       max_overflow=70,
                        pool_timeout=60,
                        pool_pre_ping=True,
                        pool_recycle=1800,
@@ -15,14 +17,14 @@ engine = create_engine(DB_URL,
                        pool_reset_on_return="rollback",
                        )
 
-session_local = sessionmaker(autoflush=False, autocommit=False, bind=engine)
+session_local = async_sessionmaker(engine, autocommit=False, autoflush=False,)
 
 Base = declarative_base()
 
 
-def get_db():
+async def get_db():
     db = session_local()
     try:
         yield db
     finally:
-        db.close()
+        await db.close()
