@@ -19,7 +19,7 @@ auth_router = APIRouter(prefix="/api/auth", tags=["authentication"])
 @auth_router.post("/register", response_model=UserResponse)
 async def register(
         user_data: UserCreate,
-        db: AsyncSession = Depends(get_db)  # ← AsyncSession
+        db: AsyncSession = Depends(get_db) 
 ):
     """Асинхронная регистрация нового пользователя"""
     result = await db.execute(
@@ -59,7 +59,7 @@ async def register(
 @auth_router.post("/login", response_model=Token)
 async def login(
         form_data: OAuth2PasswordRequestForm = Depends(),
-        db: AsyncSession = Depends(get_db)  # ← AsyncSession
+        db: AsyncSession = Depends(get_db) 
 ):
 
     result = await db.execute(
