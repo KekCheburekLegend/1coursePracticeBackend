@@ -93,7 +93,7 @@ async def login(
 @auth_router.post("/refresh", response_model=Token)
 async def refresh_token(
         refresh_token: str,
-        db: AsyncSession = Depends(get_db)  # ← AsyncSession
+        db: AsyncSession = Depends(get_db) 
 ):
     """Асинхронное обновление токена"""
     payload = decode_token(refresh_token)
